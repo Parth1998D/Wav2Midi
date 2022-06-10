@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Request, File, UploadFile, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, FileResponse
-#from audio_to_midi_master import audio2midi
+from audio_to_midi_master import audio2midi
 from fastapi.staticfiles import StaticFiles
 from urllib import request
-import uvicorn
+#import uvicorn
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
