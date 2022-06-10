@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, File, UploadFile, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, FileResponse
-from audio_to_midi_master import audio2midi
+#from audio_to_midi_master import audio2midi
 from fastapi.staticfiles import StaticFiles
 from urllib import request
 import uvicorn
@@ -29,12 +29,12 @@ async def process(wavfile: UploadFile = File(...)):
         contents = await wavfile.read()
         with open("media/" + wav_file_name, 'wb') as f:
             f.write(contents)
-        await audio2midi.run("media/" + wav_file_name, "media/" + midi_file_name)
+        #await audio2midi.run("media/" + wav_file_name, "media/" + midi_file_name)
     # except Exception:
     #     print("exception")
     finally:
         await wavfile.close()
-        return FileResponse("media/" + midi_file_name, filename=midi_file_name)
+        #return FileResponse("media/" + midi_file_name, filename=midi_file_name)
 
 
 @app.post("/link")
@@ -43,11 +43,12 @@ async def process(wavlink: str = Form(...)):
     midi_file_name = wav_file_name.split('.')[0] + '.mid'
     try:
         request.urlretrieve(wavlink, "media/"+wav_file_name)
-        await audio2midi.run("media/" + wav_file_name, "media/" + midi_file_name)
+        #await audio2midi.run("media/" + wav_file_name, "media/" + midi_file_name)
     # except Exception:
     #     print("exception")
     finally:
-        return FileResponse("media/" + midi_file_name, filename=midi_file_name)
+        print("abc")
+        # return FileResponse("media/" + midi_file_name, filename=midi_file_name)
 
 
 if __name__ == "__main__":
