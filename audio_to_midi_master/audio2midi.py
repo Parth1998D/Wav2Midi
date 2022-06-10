@@ -263,7 +263,7 @@ def run(file_in, file_out):
     # note_min='A2'
     # note_max='E6'
     note_min = 'E1'
-    note_max = 'F7'
+    note_max = 'C7'
     voiced_acc = 0.9
     onset_acc = 0.8
     frame_length = 2048
