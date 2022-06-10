@@ -4,7 +4,9 @@ from fastapi.responses import HTMLResponse, FileResponse
 from audio_to_midi_master import audio2midi
 from fastapi.staticfiles import StaticFiles
 from urllib import request
-#import uvicorn
+import os
+
+# import uvicorn
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -34,6 +36,7 @@ async def process(wavfile: UploadFile = File(...)):
     #     print("exception")
     finally:
         await wavfile.close()
+        os.remove("media/" + wav_file_name)
         return FileResponse("media/" + midi_file_name, filename=midi_file_name)
 
 
@@ -42,13 +45,13 @@ async def process(wavlink: str = Form(...)):
     wav_file_name = wavlink.split('/')[-1]
     midi_file_name = wav_file_name.split('.')[0] + '.mid'
     try:
-        request.urlretrieve(wavlink, "media/"+wav_file_name)
+        request.urlretrieve(wavlink, "media/" + wav_file_name)
         await audio2midi.run("media/" + wav_file_name, "media/" + midi_file_name)
     # except Exception:
     #     print("exception")
     finally:
+        os.remove("media/" + wav_file_name)
         return FileResponse("media/" + midi_file_name, filename=midi_file_name)
-
 
 # if __name__ == "__main__":
 #     uvicorn.run(app)
